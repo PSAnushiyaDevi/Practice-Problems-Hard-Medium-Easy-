@@ -1,0 +1,12 @@
+class Solution {
+    public int distributeCandies(int[] candyType) {
+        int k,n;
+        n=candyType.length;
+        k=n/2;
+        Set<Integer> set = new HashSet<>(); 
+        for(int v:candyType){
+            set.add(v);
+        }
+        return Math.min(k,set.size());
+    }
+}
