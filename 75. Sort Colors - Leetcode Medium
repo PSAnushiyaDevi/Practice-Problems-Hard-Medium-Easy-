@@ -1,0 +1,59 @@
+public class Solution{
+    public static void sortColors(int[] nums) {
+        int low = 0;           // For 0s
+        int mid = 0;           // For current element
+        int high = nums.length - 1;  // For 2s
+        while (mid <= high) {
+            if (nums[mid] == 0) {
+                // Swap nums[low] and nums[mid]
+                int temp = nums[low];
+                nums[low] = nums[mid];
+                nums[mid] = temp;
+
+                low++;
+                mid++;
+            } else if (nums[mid] == 1) {
+                mid++;
+            } else {
+                // nums[mid] == 2
+                int temp = nums[mid];
+                nums[mid] = nums[high];
+                nums[high] = temp;
+
+                high--;
+            }
+        }
+    }
+    public static void main(String[] args) {
+        int[] nums = {2, 0, 2, 1, 1, 0};
+        sortColors(nums);
+        System.out.print("Output: ");
+        for (int num : nums) {
+            System.out.print(num + " ");
+        }
+    }
+}
+
+_______________________________________________________________
+
+class Solution {
+    public void sortColors(int[] nums) {
+        int[] count=new int[3];
+        for(int c:nums){
+            count[c]++;
+        }
+        int r=count[0];
+        int w=count[1];
+        int b=count[2];
+        for(int i=0;i<r;i++){
+            nums[i]=0;
+        }
+        for(int i=r;i<r+w;i++){
+            nums[i]=1;
+        }
+        for(int i=r+w;i<nums.length;i++){
+            nums[i]=2;
+        }
+    }
+}
+________________________________________________
