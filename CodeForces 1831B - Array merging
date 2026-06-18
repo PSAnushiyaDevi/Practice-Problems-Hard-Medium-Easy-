@@ -1,0 +1,112 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.StringTokenizer;
+ 
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = null;
+ 
+        String line = br.readLine();
+        if (line == null) return;
+        st = new StringTokenizer(line);
+        if (!st.hasMoreTokens()) return;
+ 
+        int t = Integer.parseInt(st.nextToken());
+ 
+        while (t-- > 0) {
+            while (st == null || !st.hasMoreTokens()) {
+                line = br.readLine();
+                if (line == null) break;
+                st = new StringTokenizer(line);
+            }
+            int n = Integer.parseInt(st.nextToken());
+ 
+            int[] a = new int[n];
+            for (int i = 0; i < n; i++) {
+                while (!st.hasMoreTokens()) {
+                    st = new StringTokenizer(br.readLine());
+                }
+                a[i] = Integer.parseInt(st.nextToken());
+            }
+ 
+            int[] b = new int[n];
+            for (int i = 0; i < n; i++) {
+                while (!st.hasMoreTokens()) {
+                    st = new StringTokenizer(br.readLine());
+                }
+                b[i] = Integer.parseInt(st.nextToken());
+            }
+ 
+            Map<Integer, Integer> cnt_a = new HashMap<>();
+            Map<Integer, Integer> cnt_b = new HashMap<>();
+ 
+            int cur = 0;
+            for (int i = 0; i < n; i++) {
+                cur++;
+                if (i == n - 1 || a[i] != a[i + 1]) {
+                    if (cur > cnt_a.getOrDefault(a[i], 0)) {
+                        cnt_a.put(a[i], cur);
+                    }
+                    cur = 0;
+                }
+            }
+ 
+            cur = 0;
+            for (int i = 0; i < n; i++) {
+                cur++;
+                if (i == n - 1 || b[i] != b[i + 1]) {
+                    if (cur > cnt_b.getOrDefault(b[i], 0)) {
+                        cnt_b.put(b[i], cur);
+                    }
+                    cur = 0;
+                }
+            }
+ 
+            int ans = 0;
+            Set<Integer> keys = new HashSet<>(cnt_a.keySet());
+            keys.addAll(cnt_b.keySet());
+ 
+            for (int val : keys) {
+                int total = cnt_a.getOrDefault(val, 0) + cnt_b.getOrDefault(val, 0);
+                if (total > ans) {
+                    ans = total;
+                }
+            }
+ 
+            System.out.println(ans);
+        }
+    }
+}
+
+Input
+4
+1
+2
+2
+3
+1 2 3
+4 5 6
+2
+1 2
+2 1
+5
+1 2 2 2 2
+2 1 1 1 1
+Copy
+Output
+2
+1
+2
+5
+Copy
+Answer
+2
+1
+2
+5
