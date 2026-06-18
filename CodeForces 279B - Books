@@ -1,0 +1,51 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+ 
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+ 
+        int n = Integer.parseInt(st.nextToken());
+        long t = Long.parseLong(st.nextToken());
+ 
+        int[] a = new int[n];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            a[i] = Integer.parseInt(st.nextToken());
+        }
+ 
+        int maxBooks = 0;
+        int left = 0;
+        long currentSum = 0;
+ 
+        for (int right = 0; right < n; right++) {
+            currentSum += a[right];
+ 
+            // If time exceeds, shrink the window from the left
+            while (currentSum > t) {
+                currentSum -= a[left];
+                left++;
+            }
+ 
+            // Update the maximum number of books read so far
+            maxBooks = Math.max(maxBooks, right - left + 1);
+        }
+ 
+        System.out.println(maxBooks);
+    }
+}
+
+Test: 
+
+Input
+4 5
+3 1 2 1
+
+Output
+3
+
+Answer
+3
+
